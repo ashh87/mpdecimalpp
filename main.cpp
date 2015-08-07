@@ -5,7 +5,10 @@
 int main()
 {
 	mpdecpp::set_context(mpdecpp::DefaultContext());
-	mpdecpp::mpd_c a;
-	std::cout << "Hi" << std::endl;
+	mpdecpp::mpd_c a, b;
+	b += 1;
+	a += 2;
+	a += b;
+	std::cout << "Hi: " << a << ", " << b << std::endl;
 	return 0;
 }

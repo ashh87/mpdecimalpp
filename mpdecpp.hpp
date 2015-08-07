@@ -16,6 +16,12 @@ namespace mpdecpp
 			mpd_c(std::shared_ptr<mpd_context_t>);
 			mpd_c();
 			~mpd_c();
+
+			//addition overloads
+			mpd_c& operator+=(const mpd_c &rhs);
+			mpd_c& operator+=(const int32_t &rhs);
+
+			friend std::ostream &operator<<(std::ostream &output, const mpd_c &D);
 	};
 }
 
