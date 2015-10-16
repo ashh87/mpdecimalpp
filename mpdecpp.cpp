@@ -36,7 +36,30 @@ namespace mpdecpp
 		mpd_defaultcontext(tmp_context.get());
 		return tmp_context;
 	}
-	
+
+	std::shared_ptr<mpd_context_t> BasicContext()
+	{
+		auto tmp_context = std::make_shared<mpd_context_t>();
+		mpd_basiccontext(tmp_context.get());
+		return tmp_context;
+	}
+
+	std::shared_ptr<mpd_context_t> MaxContext()
+	{
+		auto tmp_context = std::make_shared<mpd_context_t>();
+		mpd_maxcontext(tmp_context.get());
+		return tmp_context;
+	}
+
+	std::shared_ptr<mpd_context_t> IEEEContext(int bits)
+	{
+		//The 'bits' argument must be a multiple of 32 and less than IEEE_CONTEXT_MAX_BITS.
+		//e.g. MPD_DECIMAL32, MPD_DECIMAL64, MPD_DECIMAL128
+		auto tmp_context = std::make_shared<mpd_context_t>();
+		mpd_ieee_context(tmp_context.get(), bits);
+		return tmp_context;
+	}
+
 	//number type class functions
 
 	/////////////////////////

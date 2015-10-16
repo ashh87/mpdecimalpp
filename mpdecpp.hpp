@@ -13,6 +13,9 @@ namespace mpdecpp
 	std::shared_ptr<mpd_context_t> get_context();
 
 	std::shared_ptr<mpd_context_t> DefaultContext();
+	std::shared_ptr<mpd_context_t> BasicContext();
+	std::shared_ptr<mpd_context_t> MaxContext();
+	std::shared_ptr<mpd_context_t> IEEEContext(int);
 	
 	class mpd_c {
 		private:
