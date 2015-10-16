@@ -10,8 +10,8 @@
 namespace mpdecpp
 {
 	void set_context(std::shared_ptr<mpd_context_t> new_context);
-	std::shared_ptr<mpd_context_t> get_context();
-	std::shared_ptr<mpd_context_t> get_context_ctor();
+	std::shared_ptr<mpd_context_t> get_context() noexcept;
+	std::shared_ptr<mpd_context_t> get_context_ctor() noexcept;
 
 	std::shared_ptr<mpd_context_t> DefaultContext();
 	std::shared_ptr<mpd_context_t> BasicContext();

@@ -20,12 +20,12 @@ namespace mpdecpp
 		default_context = std::move(new_context);
 	}
 	
-	std::shared_ptr<mpd_context_t> get_context()
+	std::shared_ptr<mpd_context_t> get_context() noexcept
 	{
 		return default_context;
 	}
 	
-	std::shared_ptr<mpd_context_t> get_context_ctor()
+	std::shared_ptr<mpd_context_t> get_context_ctor() noexcept
 	{
 		if (!default_context) //compare to nullptr
 			default_context = DefaultContext();
