@@ -11,11 +11,23 @@ namespace mpdecpp
 {
 	void set_context(std::shared_ptr<mpd_context_t> new_context);
 	std::shared_ptr<mpd_context_t> get_context();
+	std::shared_ptr<mpd_context_t> get_context_ctor();
 
 	std::shared_ptr<mpd_context_t> DefaultContext();
 	std::shared_ptr<mpd_context_t> BasicContext();
 	std::shared_ptr<mpd_context_t> MaxContext();
 	std::shared_ptr<mpd_context_t> IEEEContext(int);
+	
+	//a local context manager
+	class mpd_localcontext {
+		private:
+			std::shared_ptr<mpd_context_t> saved_context;
+		public:
+			mpd_localcontext(std::shared_ptr<mpd_context_t>);
+			~mpd_localcontext();
+			mpd_localcontext(const mpd_localcontext&) = delete; //no copies
+			mpd_localcontext(const mpd_localcontext&&) = delete; //no moves
+	};
 	
 	class mpd_c {
 		private:

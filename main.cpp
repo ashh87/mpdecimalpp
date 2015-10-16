@@ -22,6 +22,9 @@ int main()
 	b /= 20000000000;
 	c = !b;
 	a = !c;
+	{
+		mpdecpp::mpd_localcontext localcontext(mpdecpp::BasicContext());
+	}
 	std::cout << "Hi: " << a << ", " << b << "... " << c << "... " << (c <= b) << "... " << (c <= c) << "... " << (c <= a) << std::endl;
 	
 	std::cout << mpdecpp::sci << b << ", " << mpdecpp::SCI << b << ", " << mpdecpp::eng << b << ", " << mpdecpp::ENG << b << std::endl;

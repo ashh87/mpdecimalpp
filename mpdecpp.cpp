@@ -7,8 +7,6 @@
 
 /*
 TODO:
-local context manager
-static init. fiasco fix
 math.h functions
 istream overload?
 */
@@ -16,7 +14,7 @@ istream overload?
 namespace mpdecpp
 {
 	//this needs to change, static init. fiasco, use init on first use (per thread)
-	thread_local static std::shared_ptr<mpd_context_t> default_context = DefaultContext();
+	thread_local static std::shared_ptr<mpd_context_t> default_context;
 	
 	//set_context
 	void set_context(std::shared_ptr<mpd_context_t> new_context)
@@ -26,6 +24,13 @@ namespace mpdecpp
 	
 	std::shared_ptr<mpd_context_t> get_context()
 	{
+		return default_context;
+	}
+	
+	std::shared_ptr<mpd_context_t> get_context_ctor()
+	{
+		if (!default_context) //compare to nullptr
+			default_context = DefaultContext();
 		return default_context;
 	}
 	
@@ -60,6 +65,21 @@ namespace mpdecpp
 		return tmp_context;
 	}
 
+	//context manager
+	mpd_localcontext::mpd_localcontext(std::shared_ptr<mpd_context_t> new_context)
+	{
+		saved_context = get_context();
+		set_context(new_context);
+		std::cout << "in" << std::endl;
+	}
+
+	mpd_localcontext::~mpd_localcontext()
+	{
+		set_context(saved_context);
+		std::cout << "out" << std::endl;
+	}
+
+
 	//number type class functions
 
 	/////////////////////////
@@ -69,7 +89,7 @@ namespace mpdecpp
 	//no assignment constructor
 	mpd_c::mpd_c(nullptr_t nt) noexcept
 	{
-		number = mpd_new(default_context.get());
+		number = mpd_new(get_context_ctor().get());
 	}
 	
 	//normal constructors
@@ -111,23 +131,23 @@ namespace mpdecpp
 	}
 
 	//constructors given a value
-	mpd_c::mpd_c(int32_t value) noexcept : mpd_c(value, default_context) {}
-	mpd_c::mpd_c(int64_t value) noexcept : mpd_c(value, default_context) {}
-	mpd_c::mpd_c(uint32_t value) noexcept : mpd_c(value, default_context) {}
-	mpd_c::mpd_c(uint64_t value) noexcept : mpd_c(value, default_context) {}
-	mpd_c::mpd_c(std::string value) noexcept : mpd_c(value, default_context) {}
-	mpd_c::mpd_c(const char* value) noexcept : mpd_c(value, default_context) {}
+	mpd_c::mpd_c(int32_t value) noexcept : mpd_c(value, get_context_ctor()) {}
+	mpd_c::mpd_c(int64_t value) noexcept : mpd_c(value, get_context_ctor()) {}
+	mpd_c::mpd_c(uint32_t value) noexcept : mpd_c(value, get_context_ctor()) {}
+	mpd_c::mpd_c(uint64_t value) noexcept : mpd_c(value, get_context_ctor()) {}
+	mpd_c::mpd_c(std::string value) noexcept : mpd_c(value, get_context_ctor()) {}
+	mpd_c::mpd_c(const char* value) noexcept : mpd_c(value, get_context_ctor()) {}
 
 	//constructors given a context, default to 0
 	mpd_c::mpd_c(std::shared_ptr<mpd_context_t> context) noexcept : mpd_c(0, context) {}
 
 	//default values, no arguments
-	mpd_c::mpd_c() noexcept : mpd_c(0, default_context) {}
+	mpd_c::mpd_c() noexcept : mpd_c(0, get_context_ctor()) {}
 
 	//copy constructor
     mpd_c::mpd_c(const mpd_c& other) noexcept : mpd_c(nullptr)
     {
-		mpd_copy(number, other.number,  default_context.get());
+		mpd_copy(number, other.number,  get_context_ctor().get());
     }
 	
 	//move constructor
