@@ -494,6 +494,19 @@ namespace mpdecpp
 	const mpd_c mpd_c::operator>>(const mpd_c &other) const {
 		return mpd_c(*this) >>= other;
 	}
+
+	/////////////////////////
+	// Logical
+	/////////////////////////
+
+	const mpd_c mpd_c::operator!() const
+	{
+		mpd_c result; //defaults to 0
+		if (*this == result) //compare to 0, saving a construction
+			result = 1;
+		return result;
+	}
+
 	std::ostream &operator<<(std::ostream &output, const mpd_c &D)
 	{ //we want to change this to be more flexible
 		std::string tosci(mpd_to_sci((D.number), 1));

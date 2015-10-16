@@ -20,7 +20,8 @@ int main()
 	b = 7000;
 	a = 2;
 	a >>= 2;
-	c = b >> 2;
+	c = !b;
+	a = !c;
 	std::cout << "Hi: " << a << ", " << b << "... " << c << "... " << (c <= b) << "... " << (c <= c) << "... " << (c <= a) << std::endl;
 	
 	auto ctx = mpdecpp::get_context();
