@@ -17,12 +17,15 @@ int main()
 {
 	//mpdecpp::set_context(mpdecpp::DefaultContext());
 	mpdecpp::mpd_c a, b, c;
-	b = 7000;
+	b = 5;
 	a = 2;
-	a >>= 2;
+	b /= 20000000000;
 	c = !b;
 	a = !c;
 	std::cout << "Hi: " << a << ", " << b << "... " << c << "... " << (c <= b) << "... " << (c <= c) << "... " << (c <= a) << std::endl;
+	
+	std::cout << mpdecpp::sci << b << ", " << mpdecpp::SCI << b << ", " << mpdecpp::eng << b << ", " << mpdecpp::ENG << b << std::endl;
+	std::cout << "again: " << b << ", " << mpdecpp::SCI << b << ", " << mpdecpp::eng << b << ", " << mpdecpp::ENG << b << std::endl;
 	
 	auto ctx = mpdecpp::get_context();
 	std::cout << "main: (addr)" << ctx.get() << ", (usecount)" << ctx.use_count() << std::endl;

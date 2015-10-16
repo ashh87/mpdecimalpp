@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <string>
+#include <iostream>
 
 #include <mpdecimal.h>
 
@@ -124,7 +125,7 @@ namespace mpdecpp
 			bool operator>=(mpd_c const&) const;
 			bool operator<=(mpd_c const&) const;
 			
-			//bitwise overloads - use with care!
+			//digitwise overloads - use with care!
 			const mpd_c operator~();
 			mpd_c& operator&=(const mpd_c &);
 			mpd_c& operator|=(const mpd_c &);
@@ -142,6 +143,24 @@ namespace mpdecpp
 
 			friend std::ostream &operator<<(std::ostream &output, const mpd_c &D);
 	};
+
+	//stream manipulation
+	enum ExponentFormat
+	{
+		MPD_EXP_FMT_SCI = 0,
+		MPD_EXP_FMT_ENG
+	};
+
+	enum ExponentCapitalisation
+	{
+		MPD_EXP_CAP_LOWER = 0,
+		MPD_EXP_CAP_UPPER
+	};
+	
+	std::ostream& sci(std::ostream&);
+	std::ostream& SCI(std::ostream&);
+	std::ostream& eng(std::ostream&);
+	std::ostream& ENG(std::ostream&);
 }
 
 #endif

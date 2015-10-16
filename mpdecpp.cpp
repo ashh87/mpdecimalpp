@@ -7,6 +7,7 @@
 
 namespace mpdecpp
 {
+	//this needs to change, static init. fiasco, use init on first use (per thread)
 	thread_local static std::shared_ptr<mpd_context_t> default_context = DefaultContext();
 	
 	//needs noexcepts
@@ -438,7 +439,7 @@ namespace mpdecpp
 	}
 
 	/////////////////////////
-	// Bitwise
+	// Digitwise
 	/////////////////////////
 
 	const mpd_c mpd_c::operator~()
@@ -507,11 +508,63 @@ namespace mpdecpp
 		return result;
 	}
 
+	//stream manipulation
+	inline getExponentFormat_i() { //internal function, no prototype, comes before operator<<....
+		static int ExponentFormat_xalloc = std::ios_base::xalloc();
+		return ExponentFormat_xalloc;
+	}
+
+	inline getExponentCapitalisation_i() {
+		static int ExponentCapitalisation_xalloc = std::ios_base::xalloc();
+		return ExponentCapitalisation_xalloc;
+	}
+
 	std::ostream &operator<<(std::ostream &output, const mpd_c &D)
-	{ //we want to change this to be more flexible
-		std::string tosci(mpd_to_sci((D.number), 1));
+	{
+		std::string tosci;
+		int exp_fmt = output.iword(getExponentFormat_i());
+		int is_capital = output.iword(getExponentCapitalisation_i());
+
+		switch (exp_fmt) {
+			case ExponentFormat::MPD_EXP_FMT_ENG:
+				tosci = mpd_to_eng(D.number, is_capital);
+				break;
+			case ExponentFormat::MPD_EXP_FMT_SCI:
+			default:
+				tosci = mpd_to_sci(D.number, is_capital);
+				break;
+		}
+
 		output << tosci;
 		return output;
+	}
+
+	std::ostream& sci(std::ostream& os)
+	{
+		os.iword(getExponentFormat_i()) = ExponentFormat::MPD_EXP_FMT_SCI;
+		os.iword(getExponentCapitalisation_i()) = ExponentCapitalisation::MPD_EXP_CAP_LOWER;
+		return os;
+	}
+
+	std::ostream& SCI(std::ostream& os)
+	{
+		os.iword(getExponentFormat_i()) = ExponentFormat::MPD_EXP_FMT_SCI;
+		os.iword(getExponentCapitalisation_i()) = ExponentCapitalisation::MPD_EXP_CAP_UPPER;
+		return os;
+	}
+
+	std::ostream& eng(std::ostream& os)
+	{
+		os.iword(getExponentFormat_i()) = ExponentFormat::MPD_EXP_FMT_ENG;
+		os.iword(getExponentCapitalisation_i()) = ExponentCapitalisation::MPD_EXP_CAP_LOWER;
+		return os;
+	}
+
+	std::ostream& ENG(std::ostream& os)
+	{
+		os.iword(getExponentFormat_i()) = ExponentFormat::MPD_EXP_FMT_ENG;
+		os.iword(getExponentCapitalisation_i()) = ExponentCapitalisation::MPD_EXP_CAP_UPPER;
+		return os;
 	}
 }
 
