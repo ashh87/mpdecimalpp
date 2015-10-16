@@ -157,6 +157,7 @@ namespace mpdecpp
 			const mpd_c operator!() const;
 
 			friend std::ostream &operator<<(std::ostream &output, const mpd_c &D);
+			friend std::istream &operator>>(std::istream &input, mpd_c &D);
 	};
 
 	//stream manipulation

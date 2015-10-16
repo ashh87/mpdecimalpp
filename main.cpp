@@ -40,5 +40,9 @@ int main()
 	
 	first.join();
 	second.join();
+	
+	std::cin >> c >> a;
+	std::cout << "new c: " << c << std::endl;
+	std::cout << "new a: " << a << std::endl;
 	return 0;
 }

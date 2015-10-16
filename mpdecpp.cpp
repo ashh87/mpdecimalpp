@@ -8,12 +8,10 @@
 /*
 TODO:
 math.h functions
-istream overload?
 */
 
 namespace mpdecpp
 {
-	//this needs to change, static init. fiasco, use init on first use (per thread)
 	thread_local static std::shared_ptr<mpd_context_t> default_context;
 	
 	//set_context
@@ -583,6 +581,14 @@ namespace mpdecpp
 
 		output << tosci;
 		return output;
+	}
+
+	std::istream &operator>>(std::istream &input, mpd_c &D)
+	{ //could be more robust to bad strings (which cause errors) and make sure string is split on whitespace
+		std::string tmps;
+		input >> tmps;
+		mpd_set_string(D.number, tmps.c_str(), default_context.get());
+		return input;
 	}
 
 	std::ostream& sci(std::ostream& os)
