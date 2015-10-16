@@ -7,7 +7,7 @@
 
 namespace mpdecpp
 {
-	thread_local std::shared_ptr<mpd_context_t> default_context;
+	thread_local static std::shared_ptr<mpd_context_t> default_context = DefaultContext();
 	
 	//local context manager
 	
@@ -15,6 +15,11 @@ namespace mpdecpp
 	void set_context(std::shared_ptr<mpd_context_t> new_context)
 	{
 		default_context = std::move(new_context);
+	}
+	
+	std::shared_ptr<mpd_context_t> get_context()
+	{
+		return default_context;
 	}
 	
 	//pre-defined contexts
