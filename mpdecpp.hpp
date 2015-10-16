@@ -2,6 +2,7 @@
 #define MPDECPP_HPP
 
 #include <memory>
+#include <string>
 
 #include <mpdecimal.h>
 
@@ -25,11 +26,15 @@ namespace mpdecpp
 			mpd_c(int64_t, std::shared_ptr<mpd_context_t>);
 			mpd_c(uint32_t, std::shared_ptr<mpd_context_t>);
 			mpd_c(uint64_t, std::shared_ptr<mpd_context_t>);
+			mpd_c(std::string, std::shared_ptr<mpd_context_t>);
+			mpd_c(const char*, std::shared_ptr<mpd_context_t>);
 
 			mpd_c(int32_t value);
 			mpd_c(int64_t value);
 			mpd_c(uint32_t value);
 			mpd_c(uint64_t value);
+			mpd_c(std::string value);
+			mpd_c(const char* value);
 
 			mpd_c(std::shared_ptr<mpd_context_t>);
 

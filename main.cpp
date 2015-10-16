@@ -1,5 +1,6 @@
 #include <iostream>
 #include <thread>
+#include <string>
 
 #include "mpdecpp.hpp"
 
@@ -17,8 +18,8 @@ int main()
 	//mpdecpp::set_context(mpdecpp::DefaultContext());
 	mpdecpp::mpd_c a, b, c;
 	b = 7;
-	a += 2;
-	c = --b;
+	a = "3.2";
+	c = b / a;
 	std::cout << "Hi: " << a << ", " << b << "... " << c << std::endl;
 	
 	auto ctx = mpdecpp::get_context();

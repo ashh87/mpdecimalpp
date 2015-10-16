@@ -70,11 +70,25 @@ namespace mpdecpp
 		mpd_set_u64(number, value, context.get());
 	}
 
+	mpd_c::mpd_c(std::string value, std::shared_ptr<mpd_context_t> context)
+	{
+		number = mpd_new(context.get());
+		mpd_set_string(number, value.c_str(), context.get());
+	}
+
+	mpd_c::mpd_c(const char* value, std::shared_ptr<mpd_context_t> context)
+	{
+		number = mpd_new(context.get());
+		mpd_set_string(number, value, context.get());
+	}
+
 	//constructors given a value
 	mpd_c::mpd_c(int32_t value) : mpd_c(value, default_context) {}
 	mpd_c::mpd_c(int64_t value) : mpd_c(value, default_context) {}
 	mpd_c::mpd_c(uint32_t value) : mpd_c(value, default_context) {}
 	mpd_c::mpd_c(uint64_t value) : mpd_c(value, default_context) {}
+	mpd_c::mpd_c(std::string value) : mpd_c(value, default_context) {}
+	mpd_c::mpd_c(const char* value) : mpd_c(value, default_context) {}
 
 	//constructors given a context, default to 0
 	mpd_c::mpd_c(std::shared_ptr<mpd_context_t> context) : mpd_c(0, context) {}
