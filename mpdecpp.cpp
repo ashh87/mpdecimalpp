@@ -141,7 +141,7 @@ namespace mpdecpp
 	/////////////////////////
 	
 	//unary plus
-	const mpd_c mpd_c::operator+()
+	const mpd_c mpd_c::operator+() const
 	{
 		return mpd_c(*this);
 	}
@@ -153,7 +153,7 @@ namespace mpdecpp
 		return *this;
     }
 
-	const mpd_c mpd_c::operator++(int)
+	const mpd_c mpd_c::operator++(int) const
     {
 		return mpd_c(*this) += (uint32_t)1;
     }
@@ -214,7 +214,7 @@ namespace mpdecpp
 	/////////////////////////
 	
 	//negative
-	const mpd_c mpd_c::operator-()
+	const mpd_c mpd_c::operator-() const
 	{
 		mpd_c tmp(*this);
 		mpd_minus(tmp.number, tmp.number, default_context.get());
@@ -228,7 +228,7 @@ namespace mpdecpp
 		return *this;
     }
 
-	const mpd_c mpd_c::operator--(int)
+	const mpd_c mpd_c::operator--(int) const
     {
 		return mpd_c(*this) -= (uint32_t)1;
     }
@@ -407,12 +407,12 @@ namespace mpdecpp
 	// Comparison
 	/////////////////////////
 
-	bool mpd_c::operator==(mpd_c const& other)
+	bool mpd_c::operator==(mpd_c const& other) const
 	{
 		return (mpd_cmp(this->number, other.number, default_context.get()) == 0);
 	}
 
-	bool mpd_c::operator!=(mpd_c const& other)
+	bool mpd_c::operator!=(mpd_c const& other) const
 	{
 		return !(*this == other);
 	}
@@ -437,6 +437,63 @@ namespace mpdecpp
 		return (mpd_cmp(this->number, other.number, default_context.get()) <= 0);
 	}
 
+	/////////////////////////
+	// Bitwise
+	/////////////////////////
+
+	const mpd_c mpd_c::operator~()
+	{
+		mpd_c result;
+		mpd_invert(result.number, this->number, default_context.get());
+		return result;
+	}
+
+	mpd_c& mpd_c::operator&=(const mpd_c &rhs) {
+		mpd_and(this->number, this->number, rhs.number, default_context.get());
+		return *this;
+	}
+
+	mpd_c& mpd_c::operator|=(const mpd_c &rhs) {
+		mpd_or(this->number, this->number, rhs.number, default_context.get());
+		return *this;
+	}
+
+	mpd_c& mpd_c::operator^=(const mpd_c &rhs) {
+		mpd_xor(this->number, this->number, rhs.number, default_context.get());
+		return *this;
+	}
+
+	mpd_c& mpd_c::operator<<=(const mpd_c &rhs) {
+		if (rhs > 0)
+			mpd_shift(this->number, this->number, rhs.number, default_context.get());
+		return *this;
+	}
+
+	mpd_c& mpd_c::operator>>=(const mpd_c &rhs) {
+		if (rhs > 0)
+			mpd_shift(this->number, this->number, (-rhs).number, default_context.get());
+		return *this;
+	}
+
+	const mpd_c mpd_c::operator&(const mpd_c &other) const {
+		return mpd_c(*this) &= other;
+	}
+
+	const mpd_c mpd_c::operator|(const mpd_c &other) const {
+		return mpd_c(*this) |= other;
+	}
+
+	const mpd_c mpd_c::operator^(const mpd_c &other) const {
+		return mpd_c(*this) ^= other;
+	}
+
+	const mpd_c mpd_c::operator<<(const mpd_c &other) const {
+		return mpd_c(*this) <<= other;
+	}
+
+	const mpd_c mpd_c::operator>>(const mpd_c &other) const {
+		return mpd_c(*this) >>= other;
+	}
 	std::ostream &operator<<(std::ostream &output, const mpd_c &D)
 	{ //we want to change this to be more flexible
 		std::string tosci(mpd_to_sci((D.number), 1));

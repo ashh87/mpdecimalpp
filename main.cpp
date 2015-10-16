@@ -17,9 +17,10 @@ int main()
 {
 	//mpdecpp::set_context(mpdecpp::DefaultContext());
 	mpdecpp::mpd_c a, b, c;
-	b = 7;
+	b = 7000;
 	a = 2;
-	c = b / a;
+	a >>= 2;
+	c = b >> 2;
 	std::cout << "Hi: " << a << ", " << b << "... " << c << "... " << (c <= b) << "... " << (c <= c) << "... " << (c <= a) << std::endl;
 	
 	auto ctx = mpdecpp::get_context();

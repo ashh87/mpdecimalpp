@@ -52,9 +52,9 @@ namespace mpdecpp
 			//addition overloads
 			//   mpd_c& operator+=(const mpd_ssize_t &rhs); //is i64...
 
-			const mpd_c operator+();
+			const mpd_c operator+() const;
 			mpd_c& operator++();
-			const mpd_c operator++(int);
+			const mpd_c operator++(int) const;
 
 			mpd_c& operator+=(const mpd_c &rhs);
 			mpd_c& operator+=(const int32_t &rhs);
@@ -70,9 +70,9 @@ namespace mpdecpp
 
 			//subtraction overloads
 
-			const mpd_c operator-();
+			const mpd_c operator-() const;
 			mpd_c& operator--();
-			const mpd_c operator--(int);
+			const mpd_c operator--(int) const;
 
 			mpd_c& operator-=(const mpd_c &rhs);
 			mpd_c& operator-=(const int32_t &rhs);
@@ -116,13 +116,26 @@ namespace mpdecpp
 			mpd_c& operator%=(const mpd_c &rhs);
 			const mpd_c operator%(const mpd_c &other) const;
 			
-			//comparison overoads
-			bool operator==(mpd_c const&);
-			bool operator!=(mpd_c const&);
+			//comparison overloads
+			bool operator==(mpd_c const&) const;
+			bool operator!=(mpd_c const&) const;
 			bool operator>(mpd_c const&) const;
 			bool operator<(mpd_c const&) const;
 			bool operator>=(mpd_c const&) const;
 			bool operator<=(mpd_c const&) const;
+			
+			//bitwise overloads - use with care!
+			const mpd_c operator~();
+			mpd_c& operator&=(const mpd_c &);
+			mpd_c& operator|=(const mpd_c &);
+			mpd_c& operator^=(const mpd_c &);
+			mpd_c& operator<<=(const mpd_c &);
+			mpd_c& operator>>=(const mpd_c &);
+			const mpd_c operator&(const mpd_c &) const;
+			const mpd_c operator|(const mpd_c &) const;
+			const mpd_c operator^(const mpd_c &) const;
+			const mpd_c operator<<(const mpd_c &) const;
+			const mpd_c operator>>(const mpd_c &) const;
 
 			friend std::ostream &operator<<(std::ostream &output, const mpd_c &D);
 	};
