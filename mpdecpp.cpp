@@ -36,33 +36,80 @@ namespace mpdecpp
 	// Constructors
 	/////////////////////////
 
+	//no assignment constructor
+	mpd_c::mpd_c(nullptr_t nt)
+	{
+		number = mpd_new(default_context.get());
+	}
+	
 	//normal constructors
-	mpd_c::mpd_c(std::shared_ptr<mpd_context_t> context)
+	//normal, full constructors
+	mpd_c::mpd_c(int32_t value, std::shared_ptr<mpd_context_t> context)
 	{
 		number = mpd_new(context.get());
-		//use quiet version?
-		//init to 0
-		mpd_set_i32(number, 0, context.get());
+		mpd_set_i32(number, value, context.get());
 	}
 
-	mpd_c::mpd_c() : mpd_c(default_context) {}
+	mpd_c::mpd_c(int64_t value, std::shared_ptr<mpd_context_t> context)
+	{
+		number = mpd_new(context.get());
+		mpd_set_i64(number, value, context.get());
+	}
+
+	mpd_c::mpd_c(uint32_t value, std::shared_ptr<mpd_context_t> context)
+	{
+		number = mpd_new(context.get());
+		mpd_set_u32(number, value, context.get());
+	}
+
+	mpd_c::mpd_c(uint64_t value, std::shared_ptr<mpd_context_t> context)
+	{
+		number = mpd_new(context.get());
+		mpd_set_u64(number, value, context.get());
+	}
+
+	//constructors given a value
+	mpd_c::mpd_c(int32_t value) : mpd_c(value, default_context) {}
+	mpd_c::mpd_c(int64_t value) : mpd_c(value, default_context) {}
+	mpd_c::mpd_c(uint32_t value) : mpd_c(value, default_context) {}
+	mpd_c::mpd_c(uint64_t value) : mpd_c(value, default_context) {}
+
+	//constructors given a context, default to 0
+	mpd_c::mpd_c(std::shared_ptr<mpd_context_t> context) : mpd_c(0, context) {}
+
+	//default values, no arguments
+	mpd_c::mpd_c() : mpd_c(0, default_context) {}
 
 	//copy constructor
-    mpd_c::mpd_c(const mpd_c& other)
+    mpd_c::mpd_c(const mpd_c& other) : mpd_c(nullptr)
     {
-        number = mpd_new(default_context.get());
-		//TODO: copy and swap
+		//is this function exception safe?
 		mpd_copy(number, other.number,  default_context.get());
     }
+	
+	//move constructor
+	mpd_c::mpd_c(mpd_c&& other)
+	{
+		this->number = other.number;
+		other.number = 0; //C style
+	}
 
-	//copy assignment
-    mpd_c& mpd_c::operator=(const mpd_c& other)
+	//copy/move assignment
+    mpd_c& mpd_c::operator=(mpd_c other)
     {
-		//TODO: copy and swap
-		number = mpd_new(default_context.get());
-		mpd_copy(number, other.number,  default_context.get());
+		swap(*this, other);
 		return *this;
     }
+
+	void swap(mpd_c& first, mpd_c& second)
+	{
+		// enable ADL (not necessary in our case, but good practice)
+		using std::swap; 
+
+		// by swapping the members of two classes,
+		// the two classes are effectively swapped
+		swap(first.number, second.number); 
+	}
 
 	/////////////////////////
 	// Destructor
@@ -76,6 +123,14 @@ namespace mpdecpp
 	/////////////////////////
 	// Addition
 	/////////////////////////
+	
+	//unary plus
+	const mpd_c mpd_c::operator+()
+	{
+		return mpd_c(*this);
+	}
+
+	//addition
 
 	mpd_c& mpd_c::operator+=(const mpd_c &rhs) {
 		mpd_add(this->number, this->number, rhs.number, default_context.get());
@@ -129,6 +184,16 @@ namespace mpdecpp
 	/////////////////////////
 	// Subtraction
 	/////////////////////////
+	
+	//negative
+	const mpd_c mpd_c::operator-()
+	{
+		mpd_c tmp(*this);
+		mpd_minus(tmp.number, tmp.number, default_context.get());
+		return tmp;
+	}
+	
+	//subtraction
 
 	mpd_c& mpd_c::operator-=(const mpd_c &rhs) {
 		mpd_sub(this->number, this->number, rhs.number, default_context.get());

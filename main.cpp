@@ -18,7 +18,7 @@ int main()
 	mpdecpp::mpd_c a, b, c;
 	b += 6;
 	a += 2;
-	c = b / a;
+	c = +b;
 	std::cout << "Hi: " << a << ", " << b << "... " << c << std::endl;
 	
 	auto ctx = mpdecpp::get_context();
