@@ -115,6 +115,14 @@ namespace mpdecpp
 			//modulo overloads
 			mpd_c& operator%=(const mpd_c &rhs);
 			const mpd_c operator%(const mpd_c &other) const;
+			
+			//comparison overoads
+			bool operator==(mpd_c const&);
+			bool operator!=(mpd_c const&);
+			bool operator>(mpd_c const&) const;
+			bool operator<(mpd_c const&) const;
+			bool operator>=(mpd_c const&) const;
+			bool operator<=(mpd_c const&) const;
 
 			friend std::ostream &operator<<(std::ostream &output, const mpd_c &D);
 	};

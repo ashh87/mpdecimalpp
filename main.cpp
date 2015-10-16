@@ -18,9 +18,9 @@ int main()
 	//mpdecpp::set_context(mpdecpp::DefaultContext());
 	mpdecpp::mpd_c a, b, c;
 	b = 7;
-	a = "3.2";
+	a = 2;
 	c = b / a;
-	std::cout << "Hi: " << a << ", " << b << "... " << c << std::endl;
+	std::cout << "Hi: " << a << ", " << b << "... " << c << "... " << (c <= b) << "... " << (c <= c) << "... " << (c <= a) << std::endl;
 	
 	auto ctx = mpdecpp::get_context();
 	std::cout << "main: (addr)" << ctx.get() << ", (usecount)" << ctx.use_count() << std::endl;

@@ -403,6 +403,40 @@ namespace mpdecpp
 		return mpd_c(*this) %= other;
 	}
 
+	/////////////////////////
+	// Comparison
+	/////////////////////////
+
+	bool mpd_c::operator==(mpd_c const& other)
+	{
+		return (mpd_cmp(this->number, other.number, default_context.get()) == 0);
+	}
+
+	bool mpd_c::operator!=(mpd_c const& other)
+	{
+		return !(*this == other);
+	}
+
+ 	bool mpd_c::operator>(mpd_c const& other) const
+	{
+		return (mpd_cmp(this->number, other.number, default_context.get()) == 1);
+	}
+
+ 	bool mpd_c::operator<(mpd_c const& other) const
+	{
+		return (mpd_cmp(this->number, other.number, default_context.get()) == -1);
+	}
+
+ 	bool mpd_c::operator>=(mpd_c const& other) const
+	{
+		return (mpd_cmp(this->number, other.number, default_context.get()) >= 0);
+	}
+
+ 	bool mpd_c::operator<=(mpd_c const& other) const
+	{
+		return (mpd_cmp(this->number, other.number, default_context.get()) <= 0);
+	}
+
 	std::ostream &operator<<(std::ostream &output, const mpd_c &D)
 	{ //we want to change this to be more flexible
 		std::string tosci(mpd_to_sci((D.number), 1));
