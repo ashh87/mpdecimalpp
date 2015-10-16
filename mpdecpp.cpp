@@ -8,6 +8,9 @@
 /*
 TODO:
 math.h functions
+cmath - set errno correctly
+complex?
+http://cpptruths.blogspot.co.uk/2011/09/tale-of-noexcept-swap-for-user-defined.html?_sm_au_=iVVH7JHtFMZM8rZF
 */
 
 namespace mpdecpp
@@ -617,6 +620,49 @@ namespace mpdecpp
 		os.iword(getExponentFormat_i()) = ExponentFormat::MPD_EXP_FMT_ENG;
 		os.iword(getExponentCapitalisation_i()) = ExponentCapitalisation::MPD_EXP_CAP_UPPER;
 		return os;
+	}
+
+	//cmath
+	mpd_c exp(const mpd_c inp)
+	{
+		mpd_c result;
+		mpd_exp(result.number, inp.number, default_context.get());
+		return result;
+	}
+
+	mpd_c log(const mpd_c inp)
+	{
+		mpd_c result;
+		mpd_ln(result.number, inp.number, default_context.get());
+		return result;
+	}
+
+	mpd_c log10(const mpd_c inp)
+	{
+		mpd_c result;
+		mpd_log10(result.number, inp.number, default_context.get());
+		return result;
+	}
+
+	mpd_c pow(const mpd_c base, const mpd_c exponent)
+	{
+		mpd_c result;
+		mpd_pow(result.number, base.number, exponent.number, default_context.get());
+		return result;
+	}
+
+	mpd_c sqrt(const mpd_c inp)
+	{
+		mpd_c result;
+		mpd_sqrt(result.number, inp.number, default_context.get());
+		return result;
+	}
+
+	mpd_c fma(const mpd_c a, const mpd_c b, const mpd_c c)
+	{
+		mpd_c result;
+		mpd_fma(result.number, a.number, b.number, c.number, default_context.get());
+		return result;
 	}
 }
 

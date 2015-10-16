@@ -1,6 +1,7 @@
 #include <iostream>
 #include <thread>
 #include <string>
+#include <cmath>
 
 #include "mpdecpp.hpp"
 
@@ -28,7 +29,7 @@ int main()
 	std::cout << "Hi: " << a << ", " << b << "... " << c << "... " << (c <= b) << "... " << (c <= c) << "... " << (c <= a) << std::endl;
 	
 	std::cout << mpdecpp::sci << b << ", " << mpdecpp::SCI << b << ", " << mpdecpp::eng << b << ", " << mpdecpp::ENG << b << std::endl;
-	std::cout << "again: " << b << ", " << mpdecpp::SCI << b << ", " << mpdecpp::eng << b << ", " << mpdecpp::ENG << b << std::endl;
+	std::cout << "again: " << b << ", " << mpdecpp::SCI << b << ", " << mpdecpp::eng << b << ", " << mpdecpp::ENG << b << mpdecpp::sci << std::endl;
 	
 	auto ctx = mpdecpp::get_context();
 	std::cout << "main: (addr)" << ctx.get() << ", (usecount)" << ctx.use_count() << std::endl;
@@ -41,8 +42,45 @@ int main()
 	first.join();
 	second.join();
 	
+	float fla, flb, flc;
+	fla = 2.0;
+	flb = 4.0;
+	flc = 8.0;
+	std::cout << "fla: " << fla << " flb: " << flb << " flc: " << flc << std::endl;
+	using std::pow;
+	using std::exp;
+	using std::log;
+	using std::sqrt;
+	flc = pow(flb, fla);
+	fla = exp(5.0);
+	flb = log(fla);
+	std::cout << "fla: " << fla << " flb: " << flb << " flc: " << flc << std::endl;
+	
+	a = 2;
+	b = 4;
+	c = 8;
+	std::cout << "a: " << a << " b: " << b << " c: " << c << std::endl;
+	c = pow(b, a);
+	a = exp((mpdecpp::mpd_c)5);
+	b = log(a);
+	std::cout << "a: " << a << " b: " << b << " c: " << c << std::endl;
+	
+	a = 2;
+	std::cout << "a: " << sqrt(a) << std::endl;
+	
+	fla = 1.2;
+	flb = 3.3;
+	flc = 7;
+	a = "1.2";
+	b = "3.3";
+	c = 7;
+	
+	std::cout << "fma: " << fma(fla, flb, flc) << ", " << fma(a, b, c) << std::endl;
+	
+	std::cout << "Enter two numbers: ";
 	std::cin >> c >> a;
 	std::cout << "new c: " << c << std::endl;
 	std::cout << "new a: " << a << std::endl;
+	std::cout << "a^c: " << pow(a, c) << std::endl;
 	return 0;
 }

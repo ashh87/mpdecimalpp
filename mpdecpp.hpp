@@ -158,6 +158,76 @@ namespace mpdecpp
 
 			friend std::ostream &operator<<(std::ostream &output, const mpd_c &D);
 			friend std::istream &operator>>(std::istream &input, mpd_c &D);
+			
+			//cmath
+			
+			//cos
+			//sin
+			//tan
+			//acos
+			//asin
+			//atan
+			//atan2
+			
+			//cosh
+			//sinh
+			//tanh
+			//acosh
+			//asinh
+			//atanh
+			
+			friend mpd_c exp(const mpd_c);
+			//frexp
+			//ldexp
+			friend mpd_c log(const mpd_c);
+			friend mpd_c log10(const mpd_c);
+			//modf
+			//exp2
+			//expm1
+			//ilogb
+			//log1p
+			//log2
+			//logb
+			//scalbn
+			//scalbln
+			
+			friend mpd_c pow(const mpd_c, const mpd_c);
+			friend mpd_c sqrt(const mpd_c);
+			//cbrt
+			//hypot
+			
+			//erf
+			//erfc
+			//tgamma
+			//lgamma
+			
+			//ceil
+			//floor
+			//fmod
+			//trunc
+			//round
+			//lround
+			//llround
+			//rint
+			//llrint
+			//nearbyint
+			//remainder
+			//remquo
+			
+			//copysign
+			//nan
+			//nextafter
+			//nexttoward
+			
+			//fdim
+			//fmax
+			//fmin
+			
+			//friend mpd_c fabs(const mpd_c);
+			//friend mpd_c abs(const mpd_c);
+			friend mpd_c fma(const mpd_c, const mpd_c, const mpd_c);
+			
+			//Macros / Functions
 	};
 
 	//stream manipulation
