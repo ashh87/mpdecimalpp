@@ -48,6 +48,8 @@ namespace mpdecpp
 			//   mpd_c& operator+=(const mpd_ssize_t &rhs); //is i64...
 
 			const mpd_c operator+();
+			mpd_c& operator++();
+			const mpd_c operator++(int);
 
 			mpd_c& operator+=(const mpd_c &rhs);
 			mpd_c& operator+=(const int32_t &rhs);
@@ -64,6 +66,8 @@ namespace mpdecpp
 			//subtraction overloads
 
 			const mpd_c operator-();
+			mpd_c& operator--();
+			const mpd_c operator--(int);
 
 			mpd_c& operator-=(const mpd_c &rhs);
 			mpd_c& operator-=(const int32_t &rhs);
@@ -102,6 +106,19 @@ namespace mpdecpp
 			const mpd_c operator/(const int64_t &other) const;
 			const mpd_c operator/(const uint32_t &other) const;
 			const mpd_c operator/(const uint64_t &other) const;
+
+			//modulo overloads
+			mpd_c& operator%=(const mpd_c &rhs);
+/* 			mpd_c& operator%=(const int32_t &rhs);
+			mpd_c& operator%=(const int64_t &rhs);
+			mpd_c& operator%=(const uint32_t &rhs);
+			mpd_c& operator%=(const uint64_t &rhs); */
+
+			const mpd_c operator%(const mpd_c &other) const;
+/* 			const mpd_c operator%(const int32_t &other) const;
+			const mpd_c operator%(const int64_t &other) const;
+			const mpd_c operator%(const uint32_t &other) const;
+			const mpd_c operator%(const uint64_t &other) const; */
 
 			friend std::ostream &operator<<(std::ostream &output, const mpd_c &D);
 	};

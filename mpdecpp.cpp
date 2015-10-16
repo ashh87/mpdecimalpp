@@ -9,6 +9,8 @@ namespace mpdecpp
 {
 	thread_local static std::shared_ptr<mpd_context_t> default_context = DefaultContext();
 	
+	//needs noexcepts
+	
 	//local context manager
 	
 	//set_context
@@ -130,6 +132,18 @@ namespace mpdecpp
 		return mpd_c(*this);
 	}
 
+	//increments
+    mpd_c& mpd_c::operator++()
+    {
+		mpd_add_u32(this->number, this->number, 1, default_context.get());
+		return *this;
+    }
+
+	const mpd_c mpd_c::operator++(int)
+    {
+		return mpd_c(*this) += (uint32_t)1;
+    }
+
 	//addition
 
 	mpd_c& mpd_c::operator+=(const mpd_c &rhs) {
@@ -192,6 +206,18 @@ namespace mpdecpp
 		mpd_minus(tmp.number, tmp.number, default_context.get());
 		return tmp;
 	}
+
+	//decrements
+    mpd_c& mpd_c::operator--()
+    {
+		mpd_sub_u32(this->number, this->number, 1, default_context.get());
+		return *this;
+    }
+
+	const mpd_c mpd_c::operator--(int)
+    {
+		return mpd_c(*this) -= (uint32_t)1;
+    }
 	
 	//subtraction
 
@@ -348,6 +374,19 @@ namespace mpdecpp
 
 	const mpd_c mpd_c::operator/(const uint64_t &other) const {
 		return mpd_c(*this) /= other;
+	}
+
+	/////////////////////////
+	// Modulo
+	/////////////////////////
+
+	mpd_c& mpd_c::operator%=(const mpd_c &rhs) {
+		mpd_rem(this->number, this->number, rhs.number, default_context.get());
+		return *this;
+	}
+
+	const mpd_c mpd_c::operator%(const mpd_c &other) const {
+		return mpd_c(*this) %= other;
 	}
 
 	std::ostream &operator<<(std::ostream &output, const mpd_c &D)

@@ -16,9 +16,9 @@ int main()
 {
 	//mpdecpp::set_context(mpdecpp::DefaultContext());
 	mpdecpp::mpd_c a, b, c;
-	b += 6;
+	b = 7;
 	a += 2;
-	c = +b;
+	c = --b;
 	std::cout << "Hi: " << a << ", " << b << "... " << c << std::endl;
 	
 	auto ctx = mpdecpp::get_context();
