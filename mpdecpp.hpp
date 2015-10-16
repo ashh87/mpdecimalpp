@@ -17,35 +17,35 @@ namespace mpdecpp
 	class mpd_c {
 		private:
 			//private constructor for memory assignment only
-			mpd_c(nullptr_t);
+			mpd_c(nullptr_t) noexcept;
 
 		public:
 			mutable mpd_t *number;
 
 			//constructors
-			mpd_c(int32_t, std::shared_ptr<mpd_context_t>);
-			mpd_c(int64_t, std::shared_ptr<mpd_context_t>);
-			mpd_c(uint32_t, std::shared_ptr<mpd_context_t>);
-			mpd_c(uint64_t, std::shared_ptr<mpd_context_t>);
-			mpd_c(std::string, std::shared_ptr<mpd_context_t>);
-			mpd_c(const char*, std::shared_ptr<mpd_context_t>);
+			mpd_c(int32_t, std::shared_ptr<mpd_context_t>) noexcept;
+			mpd_c(int64_t, std::shared_ptr<mpd_context_t>) noexcept;
+			mpd_c(uint32_t, std::shared_ptr<mpd_context_t>) noexcept;
+			mpd_c(uint64_t, std::shared_ptr<mpd_context_t>) noexcept;
+			mpd_c(std::string, std::shared_ptr<mpd_context_t>) noexcept;
+			mpd_c(const char*, std::shared_ptr<mpd_context_t>) noexcept;
 
-			mpd_c(int32_t value);
-			mpd_c(int64_t value);
-			mpd_c(uint32_t value);
-			mpd_c(uint64_t value);
-			mpd_c(std::string value);
-			mpd_c(const char* value);
+			mpd_c(int32_t value) noexcept;
+			mpd_c(int64_t value) noexcept;
+			mpd_c(uint32_t value) noexcept;
+			mpd_c(uint64_t value) noexcept;
+			mpd_c(std::string value) noexcept;
+			mpd_c(const char* value) noexcept;
 
-			mpd_c(std::shared_ptr<mpd_context_t>);
+			mpd_c(std::shared_ptr<mpd_context_t>) noexcept;
 
-			mpd_c();
+			mpd_c() noexcept;
 
-			mpd_c(const mpd_c&);
-			mpd_c(mpd_c&&);
+			mpd_c(const mpd_c&) noexcept;
+			mpd_c(mpd_c&&) noexcept;
 
-			mpd_c& operator=(mpd_c other);
-			friend void swap(mpd_c&, mpd_c&);
+			mpd_c& operator=(mpd_c other) noexcept;
+			friend void swap(mpd_c&, mpd_c&) noexcept;
 
 			//destructor
 			~mpd_c();

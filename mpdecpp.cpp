@@ -5,14 +5,18 @@
 
 #include <mpdecimal.h>
 
+/*
+TODO:
+local context manager
+static init. fiasco fix
+math.h functions
+istream overload?
+*/
+
 namespace mpdecpp
 {
 	//this needs to change, static init. fiasco, use init on first use (per thread)
 	thread_local static std::shared_ptr<mpd_context_t> default_context = DefaultContext();
-	
-	//needs noexcepts
-	
-	//local context manager
 	
 	//set_context
 	void set_context(std::shared_ptr<mpd_context_t> new_context)
@@ -40,85 +44,84 @@ namespace mpdecpp
 	/////////////////////////
 
 	//no assignment constructor
-	mpd_c::mpd_c(nullptr_t nt)
+	mpd_c::mpd_c(nullptr_t nt) noexcept
 	{
 		number = mpd_new(default_context.get());
 	}
 	
 	//normal constructors
 	//normal, full constructors
-	mpd_c::mpd_c(int32_t value, std::shared_ptr<mpd_context_t> context)
+	mpd_c::mpd_c(int32_t value, std::shared_ptr<mpd_context_t> context) noexcept
 	{
 		number = mpd_new(context.get());
 		mpd_set_i32(number, value, context.get());
 	}
 
-	mpd_c::mpd_c(int64_t value, std::shared_ptr<mpd_context_t> context)
+	mpd_c::mpd_c(int64_t value, std::shared_ptr<mpd_context_t> context) noexcept
 	{
 		number = mpd_new(context.get());
 		mpd_set_i64(number, value, context.get());
 	}
 
-	mpd_c::mpd_c(uint32_t value, std::shared_ptr<mpd_context_t> context)
+	mpd_c::mpd_c(uint32_t value, std::shared_ptr<mpd_context_t> context) noexcept
 	{
 		number = mpd_new(context.get());
 		mpd_set_u32(number, value, context.get());
 	}
 
-	mpd_c::mpd_c(uint64_t value, std::shared_ptr<mpd_context_t> context)
+	mpd_c::mpd_c(uint64_t value, std::shared_ptr<mpd_context_t> context) noexcept
 	{
 		number = mpd_new(context.get());
 		mpd_set_u64(number, value, context.get());
 	}
 
-	mpd_c::mpd_c(std::string value, std::shared_ptr<mpd_context_t> context)
+	mpd_c::mpd_c(std::string value, std::shared_ptr<mpd_context_t> context) noexcept
 	{
 		number = mpd_new(context.get());
 		mpd_set_string(number, value.c_str(), context.get());
 	}
 
-	mpd_c::mpd_c(const char* value, std::shared_ptr<mpd_context_t> context)
+	mpd_c::mpd_c(const char* value, std::shared_ptr<mpd_context_t> context) noexcept
 	{
 		number = mpd_new(context.get());
 		mpd_set_string(number, value, context.get());
 	}
 
 	//constructors given a value
-	mpd_c::mpd_c(int32_t value) : mpd_c(value, default_context) {}
-	mpd_c::mpd_c(int64_t value) : mpd_c(value, default_context) {}
-	mpd_c::mpd_c(uint32_t value) : mpd_c(value, default_context) {}
-	mpd_c::mpd_c(uint64_t value) : mpd_c(value, default_context) {}
-	mpd_c::mpd_c(std::string value) : mpd_c(value, default_context) {}
-	mpd_c::mpd_c(const char* value) : mpd_c(value, default_context) {}
+	mpd_c::mpd_c(int32_t value) noexcept : mpd_c(value, default_context) {}
+	mpd_c::mpd_c(int64_t value) noexcept : mpd_c(value, default_context) {}
+	mpd_c::mpd_c(uint32_t value) noexcept : mpd_c(value, default_context) {}
+	mpd_c::mpd_c(uint64_t value) noexcept : mpd_c(value, default_context) {}
+	mpd_c::mpd_c(std::string value) noexcept : mpd_c(value, default_context) {}
+	mpd_c::mpd_c(const char* value) noexcept : mpd_c(value, default_context) {}
 
 	//constructors given a context, default to 0
-	mpd_c::mpd_c(std::shared_ptr<mpd_context_t> context) : mpd_c(0, context) {}
+	mpd_c::mpd_c(std::shared_ptr<mpd_context_t> context) noexcept : mpd_c(0, context) {}
 
 	//default values, no arguments
-	mpd_c::mpd_c() : mpd_c(0, default_context) {}
+	mpd_c::mpd_c() noexcept : mpd_c(0, default_context) {}
 
 	//copy constructor
-    mpd_c::mpd_c(const mpd_c& other) : mpd_c(nullptr)
+    mpd_c::mpd_c(const mpd_c& other) noexcept : mpd_c(nullptr)
     {
-		//is this function exception safe?
 		mpd_copy(number, other.number,  default_context.get());
     }
 	
 	//move constructor
-	mpd_c::mpd_c(mpd_c&& other)
+	mpd_c::mpd_c(mpd_c&& other) noexcept
 	{
 		this->number = other.number;
 		other.number = 0; //C style
 	}
 
 	//copy/move assignment
-    mpd_c& mpd_c::operator=(mpd_c other)
+    mpd_c& mpd_c::operator=(mpd_c other) noexcept
     {
 		swap(*this, other);
 		return *this;
     }
 
-	void swap(mpd_c& first, mpd_c& second)
+	void swap(mpd_c& first, mpd_c& second) noexcept
 	{
 		// enable ADL (not necessary in our case, but good practice)
 		using std::swap; 
