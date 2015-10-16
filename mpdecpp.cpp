@@ -658,6 +658,32 @@ namespace mpdecpp
 		return result;
 	}
 
+	mpd_c ceil(const mpd_c inp)
+	{
+		mpd_c result;
+		mpd_ceil(result.number, inp.number, default_context.get());
+		return result;
+	}
+
+	mpd_c floor(const mpd_c inp)
+	{
+		mpd_c result;
+		mpd_floor(result.number, inp.number, default_context.get());
+		return result;
+	}
+
+	mpd_c fabs(const mpd_c inp)
+	{
+		return abs(inp);
+	}
+
+	mpd_c abs(const mpd_c inp)
+	{
+		mpd_c result;
+		mpd_abs(result.number, inp.number, default_context.get());
+		return result;
+	}
+
 	mpd_c fma(const mpd_c a, const mpd_c b, const mpd_c c)
 	{
 		mpd_c result;

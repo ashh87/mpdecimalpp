@@ -201,8 +201,8 @@ namespace mpdecpp
 			//tgamma
 			//lgamma
 			
-			//ceil
-			//floor
+			friend mpd_c ceil(const mpd_c);
+			friend mpd_c floor(const mpd_c);
 			//fmod
 			//trunc
 			//round
@@ -223,8 +223,8 @@ namespace mpdecpp
 			//fmax
 			//fmin
 			
-			//friend mpd_c fabs(const mpd_c);
-			//friend mpd_c abs(const mpd_c);
+			friend mpd_c fabs(const mpd_c);
+			friend mpd_c abs(const mpd_c);
 			friend mpd_c fma(const mpd_c, const mpd_c, const mpd_c);
 			
 			//Macros / Functions
