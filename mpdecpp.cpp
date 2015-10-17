@@ -88,7 +88,7 @@ namespace mpdecpp
 	/////////////////////////
 
 	//no assignment constructor
-	mpd_c::mpd_c(nullptr_t nt) noexcept
+	mpd_c::mpd_c(std::nullptr_t nt) noexcept
 	{
 		number = mpd_new(get_context_ctor().get());
 	}
@@ -556,12 +556,12 @@ namespace mpdecpp
 	}
 
 	//stream manipulation
-	inline getExponentFormat_i() { //internal function, no prototype, comes before operator<<....
+	inline int getExponentFormat_i() { //internal function, no prototype, comes before operator<<....
 		static int ExponentFormat_xalloc = std::ios_base::xalloc();
 		return ExponentFormat_xalloc;
 	}
 
-	inline getExponentCapitalisation_i() {
+	inline int getExponentCapitalisation_i() {
 		static int ExponentCapitalisation_xalloc = std::ios_base::xalloc();
 		return ExponentCapitalisation_xalloc;
 	}
