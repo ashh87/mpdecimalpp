@@ -84,12 +84,6 @@ namespace mpdecpp
 	/////////////////////////
 	// Constructors
 	/////////////////////////
-
-	//no assignment constructor
-	mpd_c::mpd_c(std::nullptr_t nt) noexcept
-	{
-		number = mpd_new(get_context_ctor().get());
-	}
 	
 	//normal constructors
 	//normal, full constructors
@@ -144,9 +138,9 @@ namespace mpdecpp
 	mpd_c::mpd_c() noexcept : mpd_c(0, get_context_ctor()) {}
 
 	//copy constructor
-    mpd_c::mpd_c(const mpd_c& other) noexcept : mpd_c(nullptr)
+    mpd_c::mpd_c(const mpd_c& other) noexcept
     {
-		mpd_copy(number, other.number,  get_context_ctor().get());
+		number = mpd_qncopy(other.number);
     }
 	
 	//move constructor

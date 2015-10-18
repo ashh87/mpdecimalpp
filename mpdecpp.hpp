@@ -30,10 +30,6 @@ namespace mpdecpp
 	};
 	
 	class mpd_c {
-		private:
-			//private constructor for memory assignment only
-			mpd_c(std::nullptr_t) noexcept;
-
 		public:
 			mutable mpd_t *number;
 
