@@ -2,6 +2,7 @@
 #include <thread>
 #include <string>
 #include <cmath>
+#include <vector>
 
 #include "mpdecpp.hpp"
 
@@ -77,10 +78,11 @@ int main()
 	
 	std::cout << "fma: " << fma(fla, flb, flc) << ", " << fma(a, b, c) << std::endl;
 	
-	std::cout << "Enter two numbers: ";
-	std::cin >> c >> a;
-	std::cout << "new c: " << c << std::endl;
-	std::cout << "new a: " << a << std::endl;
-	std::cout << "a^c: " << pow(a, c) << std::endl;
+	std::cout << "create vec" << std::endl;
+	std::vector<mpdecpp::mpd_c> vec;
+	std::cout << "push a" << std::endl;
+	vec.push_back(a);
+	std::cout << "push b" << std::endl;
+	vec.push_back(b);
 	return 0;
 }

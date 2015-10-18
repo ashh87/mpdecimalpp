@@ -71,13 +71,11 @@ namespace mpdecpp
 	{
 		saved_context = get_context();
 		set_context(new_context);
-		std::cout << "in" << std::endl;
 	}
 
 	mpd_localcontext::~mpd_localcontext()
 	{
 		set_context(saved_context);
-		std::cout << "out" << std::endl;
 	}
 
 
@@ -181,7 +179,8 @@ namespace mpdecpp
 	
 	mpd_c::~mpd_c()
 	{
-		mpd_del(number);
+		if (number)
+			mpd_del(number);
 	}
 
 	/////////////////////////
