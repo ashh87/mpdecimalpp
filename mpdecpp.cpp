@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <string>
+#include <tuple>
 
 #include <mpdecimal.h>
 
@@ -10,7 +11,6 @@ TODO:
 math.h functions
 cmath - set errno correctly
 complex?
-http://cpptruths.blogspot.co.uk/2011/09/tale-of-noexcept-swap-for-user-defined.html?_sm_au_=iVVH7JHtFMZM8rZF
 */
 
 namespace mpdecpp
@@ -151,13 +151,13 @@ namespace mpdecpp
 	}
 
 	//copy/move assignment
-    mpd_c& mpd_c::operator=(mpd_c other) noexcept
+    mpd_c& mpd_c::operator=(mpd_c other) noexcept(noexcept(swap(other, other)))
     {
 		swap(*this, other);
 		return *this;
     }
 
-	void swap(mpd_c& first, mpd_c& second) noexcept
+	void swap(mpd_c& first, mpd_c& second) noexcept(is_nothrow_swappable_all<mpd_t*>::value)
 	{
 		// enable ADL (not necessary in our case, but good practice)
 		using std::swap; 

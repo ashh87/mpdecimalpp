@@ -9,6 +9,17 @@
 
 namespace mpdecpp
 {
+	/*
+		http://cpptruths.blogspot.co.uk/2011/09/tale-of-noexcept-swap-for-user-defined.html?_sm_au_=iVVH7JHtFMZM8rZF
+		define noxcepts by how swapping of two pointers throws
+	*/
+	template<typename... T>
+	struct is_nothrow_swappable_all
+	{
+		static constexpr std::tuple<T...> *t = 0;
+		enum { value = noexcept(t->swap(*t)) };
+	};
+
 	void set_context(std::shared_ptr<mpd_context_t> new_context);
 	std::shared_ptr<mpd_context_t> get_context() noexcept;
 	std::shared_ptr<mpd_context_t> get_context_ctor() noexcept;
@@ -55,8 +66,8 @@ namespace mpdecpp
 			mpd_c(const mpd_c&) noexcept;
 			mpd_c(mpd_c&&) noexcept;
 
-			mpd_c& operator=(mpd_c other) noexcept;
-			friend void swap(mpd_c&, mpd_c&) noexcept;
+			friend void swap(mpd_c&, mpd_c&) noexcept(is_nothrow_swappable_all<mpd_t*>::value);
+			mpd_c& operator=(mpd_c other) noexcept(noexcept(swap(other, other)));
 
 			//destructor
 			~mpd_c();
