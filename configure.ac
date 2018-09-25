@@ -3,8 +3,8 @@
 
 AC_PREREQ([2.63])
 AC_INIT([libmpdecimalpp], [0.0.0], [ash.hues@gmail.com])
-AC_CONFIG_SRCDIR([src/config.h.in])
-AC_CONFIG_HEADERS([src/config.h])
+AC_CONFIG_SRCDIR([include/config.h.in])
+AC_CONFIG_HEADERS([include/config.h])
 AM_INIT_AUTOMAKE([subdir-objects])
 
 AM_PROG_LIBTOOL
@@ -24,6 +24,7 @@ AC_PROG_CC
 # Checks for typedefs, structures, and compiler characteristics.
 
 # Checks for library functions.
+AC_SEARCH_LIBS([mpd_init], [mpdec])
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

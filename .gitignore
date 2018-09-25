@@ -51,6 +51,7 @@ autom4te.cache
 /compile
 /config.guess
 /config.h.in
+/include/config.h.in
 /config.log
 /config.status
 /config.sub
@@ -60,6 +61,7 @@ autom4te.cache
 /install-sh
 /missing
 /stamp-h1
+/include/stamp-h1
 
 # https://www.gnu.org/software/libtool/
 
