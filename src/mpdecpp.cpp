@@ -1,4 +1,4 @@
-#include "mpdecpp.hpp"
+#include "mpdecpp.h"
 
 #include <memory>
 #include <string>
